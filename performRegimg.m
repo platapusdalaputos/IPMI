@@ -1,11 +1,11 @@
-function [lmsd_map, storemask1, storemask2] = performRegimg(imgsAtlas, imgsTune,sigma_elastic, sigma_fluid, num_lev, use_composition)
+function [lmsd_map, storemask1, storemask2] = performRegimg(imgsAtlas, imgsTune,sigma_elastic, sigma_fluid, num_lev, use_composition, sourceNumber)
 % Function to carry out the registration and extraction of LMSD
 
 lmsd_map = [];
 storemask1 = zeros(3,5,340,270);
 storemask2 = zeros(3,5,340,270);
     Z = 1;
-    for i = 1:3
+    for i = 1:sourceNumber
         
         % Importing the tuning images  
         imgTune1 = imrotate(double(cell2mat(imgsTune(Z))),-90);
@@ -57,7 +57,7 @@ storemask2 = zeros(3,5,340,270);
 
             % Exporting the trial and error images
 %             exportgraphics(ax,fullfile('./Coursework/ParamImages', sprintf('Param_%d_tune_%d_atlas_%d PV%d_%d_%d_%d.jpg',l,i,j,sigma_elastic(l),sigma_fluid(l),num_lev(l),use_composition)),'Resolution',300)
-            exportgraphics(ax,fullfile('./final_imgs', sprintf('tune_%d_atlas_%d.jpg',i,j)),'Resolution',300)
+%             exportgraphics(ax,fullfile('./final_imgs', sprintf('test_%d_atlas_%d.jpg',i,j)),'Resolution',300)
             
             % Calculating the LMSD 
             lmsd_map(i,j,:,:) = calcLMSD(warp_img_loop,imgTune1, 20);
